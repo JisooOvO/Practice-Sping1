@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 // 스프링 빈에 서비스 등록
-@Service
+//@Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
     // Dependency Injection (DI)
-    @Autowired
+    // @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
