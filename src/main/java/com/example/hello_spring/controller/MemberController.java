@@ -1,8 +1,14 @@
 package com.example.hello_spring.controller;
 
+import com.example.hello_spring.domain.Member;
 import com.example.hello_spring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 
 // 스프링 빈을 등록하는 2가지 방법 - (기본) 싱글톤으로 등록 - 변경 가능
@@ -33,5 +39,31 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+    }
+
+    @GetMapping("/members/new")
+    public String createForm(){
+        return "members/createMemberForm";
+    }
+
+    // form method : post
+    @PostMapping("/members/new")
+    public String create(MemberForm form){
+        Member member = new Member();
+        member.setName(form.getName());
+        memberService.join(member);
+
+        System.out.println(form.getName());
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+
+        model.addAttribute("members", members);
+
+        return "members/memberList";
     }
 }
