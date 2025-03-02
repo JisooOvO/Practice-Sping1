@@ -1,38 +1,31 @@
 package com.example.hello_spring.service;
 
 import com.example.hello_spring.domain.Member;
+import com.example.hello_spring.repository.MemberRepository;
 import com.example.hello_spring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.annotation.Commit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// 단위 테스트
-class MemberServiceTest {
+// DB 통합 테스트
+@SpringBootTest
+@Transactional // 테스트 후 rollback 실행 - 다른 테스트에 영향을 주지 않음!
+class MemberServiceIntegrationTest {
 
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
-
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();;
-    }
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
     @Test
-    // @Commit
     void 회원가입() {
         // given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring");
 
         // when
         Long saveId = memberService.join(member);
@@ -64,13 +57,5 @@ class MemberServiceTest {
 //        }
 
         // then
-    }
-
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
     }
 }
