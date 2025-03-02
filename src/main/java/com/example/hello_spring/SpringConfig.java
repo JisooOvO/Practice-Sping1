@@ -1,5 +1,6 @@
 package com.example.hello_spring;
 
+import com.example.hello_spring.aop.TimeTraceAop;
 import com.example.hello_spring.repository.*;
 import com.example.hello_spring.service.MemberService;
 import jakarta.persistence.EntityManager;
@@ -39,6 +40,11 @@ public class SpringConfig {
     }
 
 //    @Bean
+//    public TimeTraceAop timeTraceAop() {
+//        return new TimeTraceAop();
+//    }
+
+//    @Bean
 //    public MemberRepository memberRepository(){
 //        // 레포지토리를 변경해야 할 경우 이거만 변경
 //
@@ -53,7 +59,5 @@ public class SpringConfig {
 //
 //        // JPA
 //        // return new JpaMemberRepository(em);
-//
-//
 //    }
 }
